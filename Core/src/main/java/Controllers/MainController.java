@@ -7,7 +7,6 @@ import ServiceInterfaces.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -46,6 +45,7 @@ public class MainController {
         model.addAttribute("outgoing", animalDto.getOutgoing());
         model.addAttribute("friends",
                 animalService.getFriends(animalDto.getId()));
+        model.addAttribute("animals", animalService.getAllAnimals());
 
         return "MainPage";
     }
@@ -68,16 +68,18 @@ public class MainController {
     }
 
     @RequestMapping(value = "/addFriend", method = RequestMethod.POST)
-    String addFriend(@RequestBody Long id1, Long id2) {
-        animalService.addFriendship(id1, id2);
-        return "MainPage";
+    String addFriend(@RequestParam String name,
+                     @RequestParam Long friendId,
+                     ModelMap model) {
+        animalService.addFriendship(name, friendId);
+        return getAnimal(name, model);
     }
 
     @RequestMapping(value = "/addPost", method = RequestMethod.POST)
     String addPost(@RequestParam String title,
-                  @RequestParam String content,
-                  @RequestParam String name,
-                  ModelMap model) {
+                   @RequestParam String content,
+                   @RequestParam String name,
+                   ModelMap model) {
         postService.publishPost(title, content, name);
         return getAnimal(name, model);
     }

@@ -3,6 +3,7 @@ package ServiceInterfaces;
 import DTOs.AnimalDto;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -11,7 +12,8 @@ import java.util.Set;
 public interface AnimalService {
     void createAnimal(String name, LocalDate birthday);
     void removeAnimal(String name);
-    void addFriendship(Long id1, Long id2);
+    void addFriendship(String name, Long friendId);
     AnimalDto getAnimal(String name);
     Set<AnimalDto> getFriends(Long animalId);
+    List<AnimalDto> getAllAnimals();
 }

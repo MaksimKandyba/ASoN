@@ -30,8 +30,8 @@ public class AnimalServiceImpl implements AnimalService {
         animalDao.remove(animalDao.get(name));
     }
 
-    public void addFriendship(Long id1, Long id2) {
-        animalDao.addFriendship(id1, id2);
+    public void addFriendship(String name, Long friendId) {
+        animalDao.addFriendship(name, friendId);
     }
 
     public AnimalDto getAnimal(String name) {
@@ -40,5 +40,9 @@ public class AnimalServiceImpl implements AnimalService {
 
     public Set<AnimalDto> getFriends(Long animalId) {
         return animalDao.getFriends(animalId);
+    }
+
+    public List<AnimalDto> getAllAnimals() {
+        return animalDao.getAllAnimals();
     }
 }

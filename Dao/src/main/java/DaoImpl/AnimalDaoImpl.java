@@ -8,8 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static Converters.Converter.convert;
@@ -34,14 +35,13 @@ public class AnimalDaoImpl implements AnimalDao {
         sessionFactory.getCurrentSession().delete(animal);
     }
 
-    public void addFriendship(Long id1, Long id2) {
+    public void addFriendship(String name, Long friendId) {
         sessionFactory.getCurrentSession().createSQLQuery(
-                "insert into ason_db.friendship" +
+                "insert into friendship " +
                         "(friend_1, friend_2, beginning_time)" +
-                        "values (:id1, :id2, :now")
-                .setParameter("id1", id1)
-                .setParameter("id2", id2)
-                .setParameter("now", LocalDateTime.now());
+                        "values (:id1, :id2, now())")
+                .setParameter("id1", get(name).getId())
+                .setParameter("id2", friendId).executeUpdate();
     }
 
     public AnimalDto get(String name) {
@@ -77,5 +77,16 @@ public class AnimalDaoImpl implements AnimalDao {
             animalDtos.add(convert(friend));
         }
         return animalDtos;
+    }
+
+    public List<AnimalDto> getAllAnimals() {
+        List<Animal> animals = sessionFactory.getCurrentSession()
+                .createQuery("FROM Animal").list();
+
+        List<AnimalDto> result = new ArrayList<>(animals.size());
+        for (Animal animal : animals) {
+            result.add(convert(animal));
+        }
+        return result;
     }
 }

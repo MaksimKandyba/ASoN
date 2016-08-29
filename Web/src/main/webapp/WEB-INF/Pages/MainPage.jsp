@@ -96,5 +96,18 @@
             </c:forEach>
         </ul>
     </c:if>
+
+    <form action="/addFriend" method="post">
+        <input type="submit" value="Make Friends">
+        with
+        <c:if test="${not empty animals}">
+            <select name="friendId">
+                <c:forEach var="obj" items="${animals}">
+                    <option value=${obj.id}>${obj.name}</option>
+                </c:forEach>
+            </select>
+        </c:if>
+        <input type="hidden" name="name" value=${name}>
+    </form>
 </body>
 </html>
