@@ -2,6 +2,7 @@ package Controllers;
 
 import DTOs.AnimalDto;
 import ServiceInterfaces.AnimalService;
+import ServiceInterfaces.InterestService;
 import ServiceInterfaces.MessageService;
 import ServiceInterfaces.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,8 @@ public class MainController {
     private PostService postService;
     @Autowired
     private MessageService messageService;
+    @Autowired
+    private InterestService interestService;
 
     @RequestMapping(value="/",method = RequestMethod.GET)
     public String redirect(){
@@ -46,6 +49,8 @@ public class MainController {
         model.addAttribute("friends",
                 animalService.getFriends(animalDto.getId()));
         model.addAttribute("animals", animalService.getAllAnimals());
+        model.addAttribute("allPlaces", interestService.getAllPlaces());
+        model.addAttribute("allHobbies", interestService.getAllHobbies());
 
         return "MainPage";
     }
@@ -90,6 +95,22 @@ public class MainController {
                    @RequestParam String name,
                    ModelMap model) {
         messageService.sendMessage(name, addressee, content);
+        return getAnimal(name, model);
+    }
+
+    @RequestMapping(value = "/addPlace", method = RequestMethod.POST)
+    String addPlace(@RequestParam String name,
+                    @RequestParam Long placeId,
+                    ModelMap model) {
+        interestService.addPlace(name, placeId);
+        return getAnimal(name, model);
+    }
+
+    @RequestMapping(value = "/addHobby", method = RequestMethod.POST)
+    String addHobby(@RequestParam String name,
+                    @RequestParam Long hobbyId,
+                    ModelMap model) {
+        interestService.addHobby(name, hobbyId);
         return getAnimal(name, model);
     }
 }

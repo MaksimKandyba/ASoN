@@ -52,20 +52,20 @@ public class AnimalDaoImpl implements AnimalDao {
         return convert(animal);
     }
 
-    public void addPlace(Long animalId, Long placeId) {
+    public void addPlace(String name, Long placeId) {
         sessionFactory.getCurrentSession().createSQLQuery(
-                "insert into visiting (visitor, place)" +
-                        "values (:aId, :pId")
-                .setParameter("aId", animalId)
-                .setParameter("pId", placeId);
+                "insert into visiting (visitor, place) " +
+                        "values (:aId, :pId)")
+                .setParameter("aId", get(name).getId())
+                .setParameter("pId", placeId).executeUpdate();
     }
 
-    public void addHobby(Long animalId, Long hobbyId) {
+    public void addHobby(String name, Long hobbyId) {
         sessionFactory.getCurrentSession().createSQLQuery(
-                "insert into leisure (holidaymaker, hobby)" +
-                        "values (:aId, :hId")
-                .setParameter("aId", animalId)
-                .setParameter("hId", hobbyId);
+                "insert into leisure (holidaymaker, hobby) " +
+                        "values (:aId, :hId)")
+                .setParameter("aId", get(name).getId())
+                .setParameter("hId", hobbyId).executeUpdate();
     }
 
     public Set<AnimalDto> getFriends(Long animalId) {

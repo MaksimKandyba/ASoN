@@ -35,6 +35,19 @@
         </ul>
     </c:if>
 
+    <form action="/addPlace" method="post">
+        <input type="submit" value="Add Place">
+        of
+        <c:if test="${not empty allPlaces}">
+            <select name="placeId">
+                <c:forEach var="obj" items="${allPlaces}">
+                    <option value=${obj.id}>${obj.title}</option>
+                </c:forEach>
+            </select>
+        </c:if>
+        <input type="hidden" name="name" value=${name}>
+    </form>
+
     <h4>Hobbies</h4>
     <c:if test="${not empty hobbies}">
         <ul>
@@ -43,6 +56,19 @@
             </c:forEach>
         </ul>
     </c:if>
+
+    <form action="/addHobby" method="post">
+        <input type="submit" value="Add Hobby">
+        of
+        <c:if test="${not empty allHobbies}">
+            <select name="hobbyId">
+                <c:forEach var="obj" items="${allHobbies}">
+                    <option value=${obj.id}>${obj.title}</option>
+                </c:forEach>
+            </select>
+        </c:if>
+        <input type="hidden" name="name" value=${name}>
+    </form>
 
     <h4>Posts</h4>
     <c:if test="${not empty posts}">

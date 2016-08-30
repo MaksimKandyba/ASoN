@@ -1,7 +1,6 @@
 package ServiceImpl;
 
 import DTOs.MessageDto;
-import DaoInterfaces.AnimalDao;
 import DaoInterfaces.MessageDao;
 import ServiceInterfaces.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +14,6 @@ import java.time.LocalDateTime;
 @Service
 public class MessageServiceImpl implements MessageService {
 
-    @Autowired
-    private AnimalDao animalDao;
     @Autowired
     private MessageDao messageDao;
 

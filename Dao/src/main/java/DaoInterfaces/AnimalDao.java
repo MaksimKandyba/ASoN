@@ -13,8 +13,8 @@ public interface AnimalDao {
     void remove(AnimalDto animalDto);
     void addFriendship(String name, Long friendId);
     AnimalDto get(String name);
-    void addPlace(Long animalId, Long placeId);
-    void addHobby(Long animalId, Long hobbyId);
+    void addPlace(String name, Long placeId);
+    void addHobby(String name, Long hobbyId);
     Set<AnimalDto> getFriends(Long animalId);
     List<AnimalDto> getAllAnimals();
 }

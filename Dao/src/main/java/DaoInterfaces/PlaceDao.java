@@ -2,9 +2,11 @@ package DaoInterfaces;
 
 import DTOs.PlaceDto;
 
+import java.util.List;
+
 /**
  * Created by max on 02.08.16.
  */
-public interface PlaceDao {
-        PlaceDto get(String title);
+public interface PlaceDao {;
+        List<PlaceDto> getAllPlaces();
 }

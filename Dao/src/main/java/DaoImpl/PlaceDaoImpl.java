@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static Converters.Converter.convert;
 
 /**
@@ -20,12 +23,14 @@ public class PlaceDaoImpl implements PlaceDao {
     @Autowired
     private SessionFactory sessionFactory;
 
-    public PlaceDto get(String title) {
-        Place place = (Place)
-                sessionFactory.getCurrentSession().createSQLQuery(
-                        "select * from ason_db.places " +
-                                "where title = :title")
-                .setParameter("title", title);
-        return convert(place);
+    public List<PlaceDto> getAllPlaces() {
+        List<Place> places = sessionFactory.getCurrentSession()
+                .createQuery("FROM Place").list();
+
+        List<PlaceDto> result = new ArrayList<>(places.size());
+        for (Place place : places) {
+            result.add(convert(place));
+        }
+        return result;
     }
 }

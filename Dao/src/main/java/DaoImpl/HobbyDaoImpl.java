@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static Converters.Converter.convert;
 
 /**
@@ -20,12 +23,14 @@ public class HobbyDaoImpl implements HobbyDao {
     @Autowired
     private SessionFactory sessionFactory;
 
-    public HobbyDto get(String title) {
-        Hobby hobby = (Hobby)
-                sessionFactory.getCurrentSession().createSQLQuery(
-                        "select * from ason_db.hobbies " +
-                                "where title = :title")
-                        .setParameter("title", title);
-        return convert(hobby);
+    public List<HobbyDto> getAllHobbies() {
+        List<Hobby> hobbies = sessionFactory.getCurrentSession()
+                .createQuery("FROM Hobby").list();
+
+        List<HobbyDto> result = new ArrayList<>(hobbies.size());
+        for (Hobby hobby : hobbies) {
+            result.add(convert(hobby));
+        }
+        return result;
     }
 }
