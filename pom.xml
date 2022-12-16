@@ -31,7 +31,7 @@
 
     <properties>
         <hibernate.version>4.3.7.Final</hibernate.version>
-        <spring.version>4.2.3.RELEASE</spring.version>
+        <spring.version>5.2.20.RELEASE</spring.version>
         <jackson.version>2.5.0</jackson.version>
     </properties>
 
